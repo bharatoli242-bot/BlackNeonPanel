@@ -1,9 +1,244 @@
-<!doctype html>
-<html lang="ne"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BlackNeonPanel</title><link rel="stylesheet" href="style.css"></head>
-<body><aside class="sidebar" id="sidebar"><div class="brand"><b>N</b> BLACK<span>NEON</span></div><nav><a class="active" href="#dashboard">▦ Dashboard</a><a href="#games">🎮 Games</a><a href="#tools">⚡ Tools</a><a href="#settings">⚙ Settings</a></nav><div class="online">● SYSTEM ONLINE</div></aside>
-<main><header><button id="menuToggle" class="menu">☰</button><div><small>GAMING CONTROL CENTER</small><h1>Dashboard<span>.</span></h1></div><div class="profile"><i></i><label id="profileName">Player One</label><b>P</b></div></header>
-<section class="welcome panel" id="dashboard"><div><small>WELCOME BACK, PLAYER</small><h2>Ready to <span>play?</span></h2><p>तपाईंको gaming dashboard मा स्वागत छ।</p><a class="primary" href="#games">Explore games ↗</a></div><div class="hero">Ｎ<sup>+</sup></div></section>
-<section class="stats"><article class="panel"><small>Total Games</small><strong>12</strong><em>+2 this week</em></article><article class="panel"><small>Performance</small><strong>98<span>%</span></strong><em>System optimized</em></article><article class="panel"><small>Play Time</small><strong>24<span>h</span></strong><em>This month</em></article></section>
-<section id="games"><div class="sectionhead"><div><small>YOUR LIBRARY</small><h2>Featured Games</h2></div><label class="pill">3 GAMES</label></div><div class="games"><article class="game panel"><div class="art art1">FPS</div><div class="gameinfo"><div><b>Cyber Strike</b><small>Action · Shooter</small></div><button class="play" data-game="Cyber Strike">▶</button></div></article><article class="game panel"><div class="art art2">RACE</div><div class="gameinfo"><div><b>Neon Racer</b><small>Racing · Arcade</small></div><button class="play" data-game="Neon Racer">▶</button></div></article><article class="game panel"><div class="art art3">RPG</div><div class="gameinfo"><div><b>Shadow Quest</b><small>Adventure · RPG</small></div><button class="play" data-game="Shadow Quest">▶</button></div></article></div></section>
-<section id="tools" class="panel tools"><div><small>QUICK ACCESS</small><h2>Gaming Tools</h2><p>आफ्नो gaming setup मिलाउनुहोस्।</p></div><div class="actions"><button id="boost">⚡ Performance Boost</button><button id="theme">◐ Toggle Glow</button></div><p id="notice">All systems running normally.</p></section>
-<section id="settings" class="panel settings"><small>PERSONALIZE</small><h2>Settings</h2><label class="setting"><span><b>Neon glow</b><small>UI मा neon effect</small></span><input type="checkbox" id="glow" checked></label><label class="setting"><span><b>Compact mode</b><small>Spacing घटाउने</small></span><input type="checkbox" id="compact"></label><label class="setting"><span><b>Player name</b><small>आफ्नो नाम राख्नुहोस्</small></span><input id="playerName" maxlength="24" value="Player One"></label><button class="primary" id="save">Save settings</button></section><footer>BLACKNEONPANEL <span>© 2026 · MADE FOR GAMERS</span></footer></main><div id="toast" class="toast"></div><script src="script.js"></script></body></html>
+
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BlackNeonPanel</title>
+<style>
+:root {
+  --bg: #070b09;
+  --panel: #101813;
+  --green: #39ff14;
+  --text: #eaffea;
+  --muted: #91a695;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+}
+header {
+  padding: 20px;
+  border-bottom: 1px solid #263d2b;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.logo { color: var(--green); font-size: 22px; font-weight: 900; }
+.status { color: var(--green); font-size: 12px; }
+nav {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+  padding: 12px 20px;
+}
+button, .navlink {
+  background: #142018;
+  border: 1px solid #31543a;
+  color: var(--text);
+  padding: 11px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+}
+button:hover, .navlink:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
+main { max-width: 1000px; margin: auto; padding: 20px; }
+.hero {
+  padding: 28px 20px;
+  background: linear-gradient(135deg,#14251a,#080c09);
+  border: 1px solid #31543a;
+  border-radius: 16px;
+  box-shadow: 0 0 20px #39ff1410;
+}
+h1 { font-size: clamp(30px,7vw,48px); margin: 12px 0; }
+h1 span, .green { color: var(--green); }
+p { color: var(--muted); line-height: 1.6; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(210px,1fr));
+  gap: 14px;
+  margin: 20px 0;
+}
+.card {
+  background: var(--panel);
+  border: 1px solid #263d2b;
+  border-radius: 12px;
+  padding: 18px;
+}
+.card h3 { margin-top: 8px; }
+.emoji { font-size: 34px; }
+.tag { color: var(--green); font-size: 12px; }
+section { margin-top: 28px; }
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 7px 0 12px;
+  background: #080d09;
+  border: 1px solid #31543a;
+  border-radius: 8px;
+  color: white;
+}
+footer {
+  padding: 24px;
+  text-align: center;
+  color: var(--muted);
+  border-top: 1px solid #263d2b;
+}
+.glow { box-shadow: 0 0 22px #39ff1430; }
+.hidden { display: none; }
+body.light {
+  --bg: #e9f3eb;
+  --panel: #fff;
+  --text: #142018;
+  --muted: #49624f;
+}
+body.light .hero { background: #d8f6df; }
+body.light input { background: white; color: #142018; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="logo">⬡ BLACKNEON</div>
+    <div class="status">● SYSTEM ONLINE</div>
+  </div>
+  <button onclick="toggleGlow()">✦ Toggle Glow</button>
+</header>
+
+<nav>
+  <a class="navlink" href="#dashboard">Dashboard</a>
+  <a class="navlink" href="#games">🎮 Games</a>
+  <a class="navlink" href="#tools">Tools</a>
+  <a class="navlink" href="#settings">Settings</a>
+</nav>
+
+<main id="dashboard">
+  <div class="hero">
+    <div class="tag">GAMING CONTROL CENTER</div>
+    <h1>PLAY <span>BEYOND</span><br>THE LIMIT.</h1>
+    <p>तपाईंको BlackNeon गेमिङ संसारमा स्वागत छ!</p>
+    <a class="navlink" href="#games">Explore Games ↗</a>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="tag">YOUR LIBRARY</div>
+      <h2>03 Games</h2>
+      <p>Featured games</p>
+    </div>
+    <div class="card">
+      <div class="tag">SYSTEM STATUS</div>
+      <h2 class="green">ONLINE</h2>
+      <p>Panel running normally</p>
+    </div>
+    <div class="card">
+      <div class="tag">YOUR PROFILE</div>
+      <h2 id="playerName">Player One</h2>
+      <p>Welcome, gamer!</p>
+    </div>
+  </div>
+
+  <section id="games">
+    <h2>🎮 Featured Games</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="emoji">🎯</div>
+        <h3>Cyber Strike</h3>
+        <p>Action · Shooter</p>
+        <button onclick="playGame('Cyber Strike')">▶ Select Game</button>
+      </div>
+      <div class="card">
+        <div class="emoji">🏎️</div>
+        <h3>Neon Racer</h3>
+        <p>Racing · Arcade</p>
+        <button onclick="playGame('Neon Racer')">▶ Select Game</button>
+      </div>
+      <div class="card">
+        <div class="emoji">⚔️</div>
+        <h3>Shadow Quest</h3>
+        <p>Adventure · RPG</p>
+        <button onclick="playGame('Shadow Quest')">▶ Select Game</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="tools">
+    <h2>🛠️ Gaming Tools</h2>
+    <div class="card">
+      <p>आफ्नो Gaming Panel नियन्त्रण गर्नुहोस्।</p>
+      <button onclick="boost()">⚡ Performance Boost</button>
+      <p id="toolStatus">All systems running normally.</p>
+    </div>
+  </section>
+
+  <section id="settings">
+    <h2>⚙️ Settings</h2>
+    <div class="card">
+      <label for="username">Player Name</label>
+      <input id="username" placeholder="आफ्नो नाम लेख्नुहोस्">
+      <button onclick="saveName()">Save Name</button>
+      <button onclick="toggleTheme()">Toggle Light/Dark</button>
+      <p id="settingStatus">Settings ready.</p>
+    </div>
+  </section>
+
+  <section id="login">
+    <h2>🔐 Demo Login</h2>
+    <div class="card">
+      <p>यो नमुना Login मात्र हो, वास्तविक Account प्रणाली होइन।</p>
+      <input id="loginName" placeholder="Player name">
+      <button onclick="demoLogin()">Continue as Guest</button>
+      <p id="loginStatus"></p>
+    </div>
+  </section>
+</main>
+
+<footer>© 2026 BlackNeonPanel · Game Beyond Limits</footer>
+
+<script>
+function toggleGlow() {
+  document.body.classList.toggle("glow");
+}
+function playGame(name) {
+  alert(name + " चयन गर्नुभयो! यो Demo Panel हो।");
+}
+function boost() {
+  document.getElementById("toolStatus").textContent =
+    "⚡ Demo boost activated!";
+}
+function saveName() {
+  const name = document.getElementById("username").value.trim();
+  if (!name) {
+    document.getElementById("settingStatus").textContent =
+      "पहिले आफ्नो नाम लेख्नुहोस्।";
+    return;
+  }
+  document.getElementById("playerName").textContent = name;
+  document.getElementById("settingStatus").textContent =
+    "नाम यस पेजमा परिवर्तन भयो!";
+}
+function toggleTheme() {
+  document.body.classList.toggle("light");
+}
+function demoLogin() {
+  const name = document.getElementById("loginName").value.trim();
+  if (!name) {
+    document.getElementById("loginStatus").textContent =
+      "पहिले Player name लेख्नुहोस्।";
+    return;
+  }
+  document.getElementById("playerName").textContent = name;
+  document.getElementById("loginStatus").textContent =
+    "स्वागत छ, " + name + "! Guest demo सुरु भयो।";
+}
+</script>
+</body>
+</html>
